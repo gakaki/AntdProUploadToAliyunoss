@@ -54,7 +54,13 @@ export default defineConfig({
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              redirect: '/excel',
+            },
+            {
+              path: '/excel',
+              name: 'excel',
+              icon: 'smile',
+              component: './Excel',
             },
             {
               path: '/welcome',
