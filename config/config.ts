@@ -63,12 +63,14 @@ export default defineConfig({
               component: './Excel',
             },
             {
+              hideInMenu: true,
               path: '/welcome',
               name: 'welcome',
               icon: 'smile',
               component: './Welcome',
             },
             {
+              hideInMenu: true,
               path: '/admin',
               name: 'admin',
               icon: 'crown',
@@ -85,6 +87,7 @@ export default defineConfig({
               ],
             },
             {
+              hideInMenu: true,
               name: 'list.table-list',
               icon: 'table',
               path: '/list',
@@ -147,6 +150,8 @@ export default defineConfig({
       },
     },
   },
+  base: '/uploadexcel/',
+  publicPath: '/uploadexcel/',
   manifest: {
     basePath: '/',
   },

@@ -1,8 +1,8 @@
 import { stringify } from 'querystring';
 import { history, Reducer, Effect } from 'umi';
 
-import { fakeAccountLogin } from '@/services/login';
-import { setAuthority } from '@/utils/authority';
+import { fakeAccountLogin, realAccountLogin } from '@/services/login';
+import { setAuthority, setUserNameId } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
 export interface StateType {
@@ -32,13 +32,33 @@ const Model: LoginModelType = {
 
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      // const response = yield call(fakeAccountLogin, payload);
+      const response = yield call(realAccountLogin, payload);
+
+      const responseObj = {
+        userName: '',
+        userId: '',
+        currentAuthority: 'admin',
+        status: 'ok',
+        type: 'account',
+      };
+      // debugger
+      if (response.status === 400 || response.status === 'error') {
+        responseObj.currentAuthority = 'guest';
+        responseObj.status = 'error';
+      } else {
+        responseObj.currentAuthority = 'admin';
+        responseObj.status = 'ok';
+        responseObj.userId = response.userId;
+        responseObj.userName = response.userName;
+      }
+
       yield put({
         type: 'changeLoginStatus',
-        payload: response,
+        payload: responseObj,
       });
       // Login successfully
-      if (response.status === 'ok') {
+      if (responseObj.status === 'ok') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params as { redirect: string };
@@ -74,7 +94,11 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
+      // debugger
       setAuthority(payload.currentAuthority);
+      if (payload.userName) {
+        setUserNameId(payload.userName, payload.userId);
+      }
       return {
         ...state,
         status: payload.status,

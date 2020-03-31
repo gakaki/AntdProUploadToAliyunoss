@@ -22,9 +22,9 @@ class GlobalHeaderRight extends Component<GlobalHeaderRightProps> {
     const { dispatch } = this.props;
 
     if (dispatch) {
-      dispatch({
-        type: 'global/fetchNotices',
-      });
+      // dispatch({
+      //   type: 'global/fetchNotices',
+      // });
     }
   }
 
@@ -33,10 +33,10 @@ class GlobalHeaderRight extends Component<GlobalHeaderRightProps> {
     const { dispatch } = this.props;
 
     if (dispatch) {
-      dispatch({
-        type: 'global/changeNoticeReadState',
-        payload: id,
-      });
+      // dispatch({
+      //   type: 'global/changeNoticeReadState',
+      //   payload: id,
+      // });
     }
   };
 
@@ -45,10 +45,10 @@ class GlobalHeaderRight extends Component<GlobalHeaderRightProps> {
     message.success(`${'清空了'} ${title}`);
 
     if (dispatch) {
-      dispatch({
-        type: 'global/clearNotices',
-        payload: key,
-      });
+      // dispatch({
+      //   type: 'global/clearNotices',
+      //   payload: key,
+      // });
     }
   };
 

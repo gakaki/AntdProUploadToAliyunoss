@@ -12,6 +12,11 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    '/apiyishu/': {
+      target: 'http://127.0.0.1:3001',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
   },
   test: {
     '/api/': {
@@ -19,10 +24,20 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    '/apiyishu/': {
+      target: 'http://test.data.wecare.medtreehealth.com',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
   },
   pre: {
     '/api/': {
       target: 'your pre url',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    '/apiyishu/': {
+      target: 'http://test.data.wecare.medtreehealth.com',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },

@@ -30,3 +30,8 @@ export function setAuthority(authority: string | string[]): void {
   // auto reload
   reloadAuthorized();
 }
+
+export function setUserNameId(userName: string, userId: string): void {
+  localStorage.setItem('userName', userName);
+  localStorage.setItem('userId', userId);
+}
