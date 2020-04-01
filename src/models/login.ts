@@ -34,7 +34,7 @@ const Model: LoginModelType = {
     *login({ payload }, { call, put }) {
       // const response = yield call(fakeAccountLogin, payload);
       const response = yield call(realAccountLogin, payload);
-
+      console.log(response)
       const responseObj = {
         userName: '',
         userId: '',
@@ -42,7 +42,7 @@ const Model: LoginModelType = {
         status: 'ok',
         type: 'account',
       };
-      // debugger
+
       if (response.status === 400 || response.status === 'error') {
         responseObj.currentAuthority = 'guest';
         responseObj.status = 'error';
@@ -57,6 +57,8 @@ const Model: LoginModelType = {
         type: 'changeLoginStatus',
         payload: responseObj,
       });
+
+
       // Login successfully
       if (responseObj.status === 'ok') {
         const urlParams = new URL(window.location.href);
@@ -82,6 +84,8 @@ const Model: LoginModelType = {
       const { redirect } = getPageQuery();
       // Note: There may be security issues, please note
       if (window.location.pathname !== '/user/login' && !redirect) {
+        localStorage.removeItem("userId")
+        localStorage.removeItem("userName")
         history.replace({
           pathname: '/user/login',
           search: stringify({
@@ -94,7 +98,7 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      // debugger
+
       setAuthority(payload.currentAuthority);
       if (payload.userName) {
         setUserNameId(payload.userName, payload.userId);

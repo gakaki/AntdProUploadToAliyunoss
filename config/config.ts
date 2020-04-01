@@ -30,6 +30,9 @@ export default defineConfig({
   targets: {
     ie: 11,
   },
+  history: {
+    type: 'hash'
+  }, 
   // umi routes: https://umijs.org/zh/guide/router.html
   routes: [
     {
@@ -150,7 +153,7 @@ export default defineConfig({
       },
     },
   },
-  base: '/uploadexcel/',
+  base: '/',
   publicPath: '/uploadexcel/',
   manifest: {
     basePath: '/',

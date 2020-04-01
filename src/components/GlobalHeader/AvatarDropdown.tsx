@@ -40,9 +40,18 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
       },
       menu,
     } = this.props;
-
+    
     // @ts-ignore
-    currentUser.name = localStorage.getItem('userName');
+    if(!currentUser.name){
+      history.push("/user/login")
+    }else{
+      const userName =  localStorage.getItem('userName');
+      if(!userName){
+        history.push("/user/login")
+      }else{
+        currentUser.name = userName
+      }
+    }
 
     const menuHeaderDropdown = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>
