@@ -5,11 +5,12 @@ export const basePath = `http://test.data.wecare.medtreehealth.com`;
 // const basePath = `http://127.0.0.1:3001`
 
 export async function queryFiles(params?: ExcelListParams) {
+  let userId = localStorage.getItem("userId") || "0"
   // eslint-disable-next-line no-param-reassign
   const res = await request(`${basePath}/files`, {
     method: 'get',
     headers: {
-      userId: `${params?.userId || 0}`,
+      userId: userId
     },
   });
   // console.log(res)
@@ -20,7 +21,9 @@ export async function queryFiles(params?: ExcelListParams) {
   };
 }
 
-export async function saveFilesUploadResult(userId: number = 0, json: any): Promise<any> {
+export async function saveFilesUploadResult(userId: string|null, json: any): Promise<any> {
+  if(!userId) userId = "0"
+  console.log(userId)
   return request(`${basePath}/file`, {
     method: 'post',
     headers: {

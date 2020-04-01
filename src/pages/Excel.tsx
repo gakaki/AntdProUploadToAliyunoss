@@ -23,9 +23,11 @@ interface OSSData {
   signature?: string;
 }
 
-const UploadDir: React.FC<{}> = () => {
+const UploadDir: React.FC<{ refreshFun?:()=>{} }> = (props) => {
   const [ossOptions, setOssOptions] = useState<OSS.Options>();
   const [changeText, setChangeText] = useState<string>('');
+
+
 
   interface FileWithUrl extends File {
     fileUrl?: string;
@@ -47,7 +49,7 @@ const UploadDir: React.FC<{}> = () => {
       return `${year}${month}${day}`;
     }
 
-    const userId = localStorage.getItem('userId');
+    let userId = localStorage.getItem('userId') 
     console.log('当前的userId是', userId);
     const yyyymmdd = `hisdata/${userId}/${formatDate(new Date())}`;
 
@@ -97,6 +99,7 @@ const UploadDir: React.FC<{}> = () => {
       )
         .then((res: boolean[]) => {
           saveFilesUploadResult(userId, upload_object);
+          props.refreshFun()
         })
         .catch(function (error) {
           console.log(error);
@@ -171,15 +174,20 @@ const ExcelList: React.FC<{}> = () => {
       dataIndex: 'status',
       hideInForm: true,
       valueEnum: {
-        0: { text: '等待上传', status: 'Default' },
-        1: { text: '上传中', status: 'Uploading' },
-        2: { text: '已上线', status: '未知' },
-        3: { text: '正常', status: 'Success' },
+        0: { text: '等待处理' },
+        1: { text: '完成，存在错误'},
+        2: { text: '完成，和模板不同无法解析' },
+        3: { text: '完成' },
       },
     },
+    // {
+    //   title: '错误数据excel下载链接',
+    //   dataIndex: 'url',
+    //   hideInForm: true
+    // },
     {
       title: '操作',
-      dataIndex: 'option',
+      // dataIndex: 'option',
       valueType: 'option',
       render: (_, record) => (
         <>
@@ -266,7 +274,7 @@ export default (): React.ReactNode => {
       <Card>
         <Row gutter={12}>
           <Col span={12}>
-            <h1>上传图片</h1>
+            {/* <h1>上传图片</h1> */}
             <UploadDir />
           </Col>
           <Col span={12}>

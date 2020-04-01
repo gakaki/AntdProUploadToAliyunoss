@@ -1,7 +1,7 @@
 export interface ExcelListItem {
   id: number;
-  name: boolean;
-  status: string;
+  name?: boolean;
+  status?: number;
 }
 
 export interface ExcelListPagination {
